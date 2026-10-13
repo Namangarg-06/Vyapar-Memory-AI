@@ -1,0 +1,2 @@
+Customer: Agarwal Electricals
+Order ORD-2026-555: Please dispatch 100 boxes of LED Floodlights @ Rs. 1,200/box (Total Rs. 1,20,000) before Friday.
