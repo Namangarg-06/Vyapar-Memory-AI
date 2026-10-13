@@ -27,6 +27,8 @@ backend/*.db
 backend/*.sqlite3
 backend/storage/uploads/*
 !backend/storage/uploads/.gitkeep
+storage/
+*.db
 
 # Node / Frontend
 node_modules/
