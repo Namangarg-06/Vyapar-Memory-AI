@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   CheckCircle2,
   Copy,
-  Languages,
   MessageSquare,
-  ShieldCheck,
-  XCircle,
 } from 'lucide-react';
 import { api } from '../services/api';
 import { AIDraft, FollowUpTask } from '../types';
@@ -20,11 +17,6 @@ export const TasksDraftsPage: React.FC<TasksDraftsPageProps> = ({
   const [tasks, setTasks] = useState<FollowUpTask[]>([]);
   const [loading, setLoading] = useState(true);
   const [generatingId, setGeneratingId] = useState<number | null>(null);
-  const [selectedDraft, setSelectedDraft] = useState<AIDraft | null>(null);
-  const [editedBody, setEditedBody] = useState('');
-  const [approvalComment, setApprovalComment] = useState(
-    'Verified quantities against Invoice INV-2026-1042 and Challan DC-2026-089.'
-  );
   const [copiedId, setCopiedId] = useState<number | null>(null);
 
   const loadTasks = async () => {
@@ -41,288 +33,135 @@ export const TasksDraftsPage: React.FC<TasksDraftsPageProps> = ({
     loadTasks();
   }, []);
 
-  const handleGenerateLanguageDraft = async (
-    taskId: number,
-    lang: 'english' | 'hindi' | 'hinglish'
-  ) => {
+  const handleGenerate = async (taskId: number, lang: 'english' | 'hindi' | 'hinglish') => {
     setGeneratingId(taskId);
     try {
-      const draft = await api.generateDraft(taskId, lang, 'whatsapp');
+      await api.generateDraft(taskId, lang, 'whatsapp');
       await loadTasks();
-      setSelectedDraft(draft);
-      setEditedBody(draft.body_text);
       onDataMutated();
     } finally {
       setGeneratingId(null);
     }
   };
 
-  const handleDecision = async (decision: 'approved' | 'rejected') => {
-    if (!selectedDraft) return;
-    await api.approveDraft(selectedDraft.id, {
-      decision,
-      edited_body_text: editedBody,
-      comment: approvalComment,
+  const handleApprove = async (draftId: number, bodyText: string) => {
+    await api.approveDraft(draftId, {
+      decision: 'approved',
+      edited_body_text: bodyText,
     });
-    setSelectedDraft(null);
     await loadTasks();
     onDataMutated();
   };
 
-  const handleCompleteTask = async (taskId: number) => {
-    await api.completeTask(taskId);
-    await loadTasks();
-    onDataMutated();
-  };
-
-  const copyApprovedText = (draft: AIDraft) => {
+  const handleCopy = (draft: AIDraft) => {
     navigator.clipboard.writeText(draft.body_text);
     setCopiedId(draft.id);
-    setTimeout(() => setCopiedId(null), 2500);
+    setTimeout(() => setCopiedId(null), 2000);
   };
 
   return (
-    <div className="space-y-6">
-      {/* Safety Banner */}
-      <div className="bg-indigo-950 text-white p-5 rounded-xl border border-indigo-800 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-start gap-3">
-          <ShieldCheck className="w-6 h-6 text-indigo-400 shrink-0 mt-0.5" />
-          <div>
-            <h2 className="text-sm font-bold">
-              Mandatory Owner Approval Gate for External Follow-Ups
-            </h2>
-            <p className="text-xs text-indigo-200 mt-0.5">
-              Vyapar Memory AI never sends external WhatsApp messages or emails autonomously. Generate a draft in{' '}
-              <strong>Hinglish, Hindi, or English</strong>, inspect its supporting evidence, edit if needed, and explicitly approve before copying/exporting.
-            </p>
-          </div>
-        </div>
+    <div className="space-y-5">
+      <div>
+        <h2 className="text-base font-bold text-slate-900">Follow-Up Tasks & Drafts</h2>
+        <p className="text-xs text-slate-500">
+          AI-generated WhatsApp drafts in Hinglish, Hindi, and English. Requires your approval before sending.
+        </p>
       </div>
 
       {loading ? (
-        <div className="p-12 text-center text-xs text-slate-500">
-          Loading follow-up tasks and drafts...
+        <div className="p-12 text-center text-xs text-slate-400">Loading drafts...</div>
+      ) : tasks.length === 0 ? (
+        <div className="bg-white p-12 rounded-xl border border-slate-200 text-center text-xs text-slate-500">
+          No pending follow-ups.
         </div>
       ) : (
-        <div className="space-y-5">
+        <div className="space-y-4">
           {tasks.map((task) => (
             <div
               key={task.id}
-              className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+              className="bg-white rounded-xl border border-slate-200 shadow-xs p-5 space-y-4"
             >
-              {/* Task Header */}
-              <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-slate-900">
-                      {task.title}
+                    <span className="font-bold text-sm text-slate-900">{task.party_name}</span>
+                    <span className="text-xs text-slate-400 font-mono">({task.order_number})</span>
+                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-700">
+                      Due: {task.due_date}
                     </span>
-                    <span
-                      className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded ${
-                        task.status === 'approved_ready' || task.status === 'completed'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-amber-100 text-amber-800'
-                      }`}
-                    >
-                      {task.status.replace('_', ' ')}
-                    </span>
-                    {task.is_demo && (
-                      <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-amber-200 text-amber-950">
-                        DEMO
-                      </span>
-                    )}
                   </div>
-                  <p className="text-xs text-slate-600 mt-1">{task.description}</p>
+                  <p className="text-xs text-slate-600 mt-1">{task.title}</p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs text-slate-500 flex items-center gap-1 mr-1">
-                    <Languages className="w-3.5 h-3.5" />
-                    Generate Draft:
-                  </span>
-                  {(['hinglish', 'english', 'hindi'] as const).map((lang) => (
+                {/* Generate New Draft Language Buttons */}
+                <div className="flex items-center gap-1.5 text-xs">
+                  <span className="text-slate-400 text-[11px] mr-1">New Draft:</span>
+                  {(['hinglish', 'hindi', 'english'] as const).map((lang) => (
                     <button
                       key={lang}
-                      onClick={() => handleGenerateLanguageDraft(task.id, lang)}
+                      onClick={() => handleGenerate(task.id, lang)}
                       disabled={generatingId === task.id}
-                      className="px-2.5 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-semibold hover:bg-indigo-100 uppercase"
+                      className="px-2 py-1 rounded bg-slate-100 text-slate-700 hover:bg-slate-200 text-[11px] font-semibold uppercase transition"
                     >
                       + {lang}
                     </button>
                   ))}
-                  {task.status !== 'completed' && (
-                    <button
-                      onClick={() => handleCompleteTask(task.id)}
-                      className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700"
-                    >
-                      Mark Task Completed
-                    </button>
-                  )}
                 </div>
               </div>
 
-              {/* Drafts List */}
-              <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {/* Drafts Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {task.drafts.map((draft) => (
                   <div
                     key={draft.id}
-                    className={`p-4 rounded-xl border flex flex-col justify-between ${
-                      draft.status === 'approved'
-                        ? 'bg-emerald-50/40 border-emerald-300'
-                        : draft.status === 'rejected'
-                        ? 'bg-rose-50/40 border-rose-200'
-                        : 'bg-slate-50 border-slate-200'
-                    }`}
+                    className="p-4 rounded-lg border border-slate-200 bg-slate-50/70 space-y-2 flex flex-col justify-between"
                   >
                     <div>
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-indigo-600 text-white">
-                            {draft.language}
-                          </span>
-                          <span
-                            className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded ${
-                              draft.status === 'approved'
-                                ? 'bg-emerald-200 text-emerald-950'
-                                : draft.status === 'rejected'
-                                ? 'bg-rose-200 text-rose-950'
-                                : 'bg-amber-200 text-amber-950'
-                            }`}
-                          >
-                            {draft.status.replace('_', ' ')}
-                          </span>
-                        </div>
-                        <span className="text-[11px] text-slate-400">
-                          Provider: {draft.generated_by_provider}
+                      <div className="flex items-center justify-between text-[11px]">
+                        <span className="font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
+                          {draft.language} Draft
+                        </span>
+                        <span
+                          className={`font-semibold ${
+                            draft.status === 'approved' ? 'text-emerald-700' : 'text-amber-700'
+                          }`}
+                        >
+                          {draft.status === 'approved' ? '✓ Approved' : 'Pending Approval'}
                         </span>
                       </div>
-
-                      <p className="text-xs font-bold text-slate-900 mb-1.5">
-                        Subject: {draft.subject}
-                      </p>
-                      <pre className="p-3 rounded-lg bg-white border border-slate-200 text-xs text-slate-800 whitespace-pre-wrap font-sans leading-relaxed">
+                      <p className="text-xs text-slate-800 whitespace-pre-wrap mt-2 font-sans leading-relaxed">
                         {draft.body_text}
-                      </pre>
+                      </p>
                     </div>
 
-                    <div className="mt-3 pt-3 border-t border-slate-200/80 flex items-center justify-between gap-2">
-                      <button
-                        onClick={() => {
-                          setSelectedDraft(draft);
-                          setEditedBody(draft.body_text);
-                        }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800"
-                      >
-                        <MessageSquare className="w-3.5 h-3.5" />
-                        <span>Review / Edit / Approve</span>
-                      </button>
-
-                      {draft.status === 'approved' ? (
+                    <div className="pt-2 border-t border-slate-200 flex items-center justify-between gap-2">
+                      {draft.status !== 'approved' ? (
                         <button
-                          onClick={() => copyApprovedText(draft)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700"
+                          onClick={() => handleApprove(draft.id, draft.body_text)}
+                          className="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 flex items-center gap-1"
                         >
-                          <Copy className="w-3.5 h-3.5" />
-                          <span>
-                            {copiedId === draft.id
-                              ? 'Copied for WhatsApp!'
-                              : 'Copy Approved Message'}
-                          </span>
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>Approve Draft</span>
                         </button>
                       ) : (
-                        <span className="text-[11px] text-amber-800 font-semibold">
-                          🔒 Approval required before export
+                        <span className="text-xs font-semibold text-emerald-700">
+                          Ready to Send
                         </span>
                       )}
+
+                      <button
+                        onClick={() => handleCopy(draft)}
+                        className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-xs font-semibold hover:bg-slate-50 flex items-center gap-1.5"
+                      >
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>{copiedId === draft.id ? 'Copied!' : 'Copy for WhatsApp'}</span>
+                      </button>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-        </div>
-      )}
-
-      {/* Modal: Edit & Approve / Reject Draft */}
-      {selectedDraft && (
-        <div className="fixed inset-0 bg-slate-900/60 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-xl border border-slate-200 space-y-4">
-            <div>
-              <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-indigo-100 text-indigo-800">
-                {selectedDraft.language} follow-up draft
-              </span>
-              <h3 className="text-base font-bold text-slate-900 mt-1">
-                Review, Edit & Approve Follow-Up Message
-              </h3>
-              <p className="text-xs text-slate-500">
-                Party: {selectedDraft.party_name} • External messaging provider is not connected; approving unlocks verified copy/export and logs an immutable ApprovalRecord.
-              </p>
-            </div>
-
-            {/* Supporting Evidence */}
-            {selectedDraft.supporting_evidence &&
-              selectedDraft.supporting_evidence.length > 0 && (
-                <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs space-y-1">
-                  <span className="text-[10px] font-bold uppercase text-slate-500 block">
-                    Supporting Evidence Linked to This Draft:
-                  </span>
-                  {selectedDraft.supporting_evidence.map((ev, i) => (
-                    <div key={i} className="text-slate-700">
-                      • <strong>{ev.filename}</strong> ({ev.location}): "{ev.quote}"
-                    </div>
-                  ))}
-                </div>
-              )}
-
-            <div className="space-y-2 text-xs">
-              <label className="font-semibold block text-slate-700">
-                Editable Message Text
-              </label>
-              <textarea
-                rows={7}
-                value={editedBody}
-                onChange={(e) => setEditedBody(e.target.value)}
-                className="w-full p-3 rounded-lg border border-slate-300 text-xs leading-relaxed"
-              />
-              <label className="font-semibold block text-slate-700 pt-1">
-                Approval Audit Note
-              </label>
-              <input
-                type="text"
-                value={approvalComment}
-                onChange={(e) => setApprovalComment(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-slate-300"
-              />
-            </div>
-
-            <div className="pt-2 flex items-center justify-between">
-              <button
-                type="button"
-                onClick={() => setSelectedDraft(null)}
-                className="px-3 py-2 rounded-lg border border-slate-300 text-xs font-semibold"
-              >
-                Cancel
-              </button>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleDecision('rejected')}
-                  className="inline-flex items-center gap-1 px-3.5 py-2 rounded-lg bg-rose-100 text-rose-800 text-xs font-bold hover:bg-rose-200"
-                >
-                  <XCircle className="w-4 h-4" />
-                  <span>Reject Draft</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDecision('approved')}
-                  className="inline-flex items-center gap-1 px-4 py-2 rounded-lg bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700"
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Approve Draft</span>
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       )}
     </div>
