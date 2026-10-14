@@ -1,24 +1,12 @@
 @echo off
-title Vyapar Memory AI Launcher
+title Vyapar Memory AI
 color 0A
 
-echo ========================================================
-echo       Vyapar Memory AI — App Launcher
-echo ========================================================
-echo.
-echo 1. Starting Backend API on http://localhost:8000...
-start "Vyapar Backend" cmd /k "cd /d %~dp0backend && python -m uvicorn app.main:app --port 8000"
+cd /d "%~dp0"
+set PATH=C:\Users\Hp\AppData\Local\Programs\Python\Python313;C:\Users\Hp\AppData\Local\Programs\Python\Python313\Scripts;C:\Program Files\nodejs;%PATH%
 
-echo 2. Starting Frontend on http://localhost:5173...
-start "Vyapar Frontend" cmd /k "cd /d %~dp0frontend && npm run dev"
-
-echo 3. Waiting 3 seconds for server boot...
-timeout /t 3 /nobreak >nul
-
-echo 4. Opening Browser...
-start http://localhost:5173
-
-echo.
-echo App chal chuki hai! Browser check kijiye.
-echo Server windows ko minimize kar sakte hain.
+python run.py
+if errorlevel 1 (
+    "C:\Users\Hp\AppData\Local\Programs\Python\Python313\python.exe" run.py
+)
 pause
