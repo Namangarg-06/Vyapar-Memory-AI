@@ -67,10 +67,10 @@ export const DiscrepanciesPage: React.FC<DiscrepanciesPageProps> = ({
             <span>Mismatch & Shortfall Engine</span>
           </div>
           <h2 className="text-xl md:text-2xl font-black">
-            🚨 पकड़ी गई गड़बड़ियां (Detected Discrepancies)
+            🚨 Detected Business Discrepancies
           </h2>
           <p className="text-rose-100 text-xs md:text-sm mt-1">
-            यहाँ वो सारे ऑर्डर्स दिखेंगे जहाँ बिल ज्यादा का कटा पर डिलीवरी कम माल की हुई।
+            Automated cross-document reconciliation comparing WhatsApp orders, tax invoices, and delivery challans.
           </p>
         </div>
 
@@ -80,20 +80,20 @@ export const DiscrepanciesPage: React.FC<DiscrepanciesPageProps> = ({
           className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-white text-rose-700 hover:bg-rose-50 text-xs font-black shadow-md transition active:scale-95 shrink-0"
         >
           <RefreshCw className={`w-4 h-4 ${scanning ? 'animate-spin' : ''}`} />
-          <span>Dubara Scan Karein (Re-scan)</span>
+          <span>Re-scan Business Records</span>
         </button>
       </div>
 
       {loading ? (
         <div className="p-12 text-center text-xs font-bold text-slate-400">
-          Scannning business records...
+          Scanning business records across orders, invoices, and challans...
         </div>
       ) : discrepancies.length === 0 ? (
         <div className="bg-white p-12 rounded-3xl border border-slate-200 text-center space-y-3 shadow-sm">
           <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
-          <h3 className="text-base font-black text-slate-900">Sabhi Records Reconciled Hain!</h3>
+          <h3 className="text-base font-black text-slate-900">All Records Reconciled!</h3>
           <p className="text-xs text-slate-500">
-            Koi bhi quantity ya billing mismatch nahi mila.
+            No quantity or billing mismatches detected in your workspace.
           </p>
         </div>
       ) : (
@@ -134,10 +134,10 @@ export const DiscrepanciesPage: React.FC<DiscrepanciesPageProps> = ({
                     onChange={(e) => handleStatusChange(disc.id, e.target.value)}
                     className="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold bg-slate-50 text-slate-700"
                   >
-                    <option value="open">Status: Open (Action Needed)</option>
+                    <option value="open">Status: Open (Action Required)</option>
                     <option value="investigating">Investigating</option>
                     <option value="followup_drafted">Follow-Up Drafted</option>
-                    <option value="resolved">Resolved (Clear)</option>
+                    <option value="resolved">Resolved (Cleared)</option>
                     <option value="dismissed">Dismissed</option>
                   </select>
                 </div>
@@ -152,7 +152,7 @@ export const DiscrepanciesPage: React.FC<DiscrepanciesPageProps> = ({
                   <span className="text-xl font-black text-blue-950">
                     {disc.expected_value}
                   </span>
-                  <p className="text-[11px] text-blue-700 font-medium">Billed to Customer</p>
+                  <p className="text-[11px] text-blue-700 font-medium">Billed in Tax Invoice</p>
                 </div>
 
                 <div className="bg-amber-50/70 border border-amber-200 p-4 rounded-2xl space-y-1">
@@ -162,12 +162,12 @@ export const DiscrepanciesPage: React.FC<DiscrepanciesPageProps> = ({
                   <span className="text-xl font-black text-amber-950">
                     {disc.actual_value}
                   </span>
-                  <p className="text-[11px] text-amber-800 font-medium">Received by Party</p>
+                  <p className="text-[11px] text-amber-800 font-medium">Received by Customer</p>
                 </div>
 
                 <div className="bg-rose-50 border border-rose-300 p-4 rounded-2xl space-y-1">
                   <span className="text-rose-600 block text-xs font-bold">
-                    3. Shortfall / Nuksan
+                    3. Shortfall / Discrepancy
                   </span>
                   <span className="text-xl font-black text-rose-600">
                     {disc.delta_value}
@@ -176,7 +176,7 @@ export const DiscrepanciesPage: React.FC<DiscrepanciesPageProps> = ({
                 </div>
               </div>
 
-              {/* Explanation in plain text */}
+              {/* Explanation */}
               <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs text-slate-700 leading-relaxed font-medium">
                 {disc.explanation}
               </div>
@@ -185,7 +185,7 @@ export const DiscrepanciesPage: React.FC<DiscrepanciesPageProps> = ({
               {disc.evidence_refs && disc.evidence_refs.length > 0 && (
                 <div className="space-y-2">
                   <span className="text-xs font-black text-slate-600 uppercase tracking-wider block">
-                    📄 Original Saboot (Evidence Chain):
+                    📄 Original Source Documents (Evidence Chain):
                   </span>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                     {disc.evidence_refs.map((ev, idx) => (
@@ -211,14 +211,14 @@ export const DiscrepanciesPage: React.FC<DiscrepanciesPageProps> = ({
               {/* Action Bar */}
               <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100">
                 <span className="text-xs text-slate-500 font-semibold">
-                  Dashboard par jaakar 1-click me WhatsApp reminder bhej sakte hain.
+                  Send a pre-formatted WhatsApp reminder directly from the Dashboard.
                 </span>
                 <button
                   onClick={() => onNavigate('dashboard')}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-black shadow-md shadow-emerald-500/20 hover:from-emerald-700 hover:to-teal-700 transition active:scale-95"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  <span>WhatsApp Reminder Kholein (Dashboard)</span>
+                  <span>Open WhatsApp Follow-Up (Dashboard)</span>
                 </button>
               </div>
             </div>

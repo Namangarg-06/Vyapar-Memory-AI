@@ -10,10 +10,10 @@ import { api } from '../services/api';
 import { AssistantAskResponse } from '../types';
 
 const SUGGESTIONS = [
-  'Sharma Traders ka kitna box bacha hai?',
-  '5 box ka kitna rupya banta hai?',
-  'Delivery Challan DC-2026-069 me kya likha hai?',
-  'Pura Sharma Traders ka hisab batao',
+  'How many boxes are pending for Sharma Traders?',
+  'What is the financial value of the missing boxes?',
+  'What are the details recorded in Delivery Challan DC-2026-069?',
+  'Summarize the complete Sharma Traders transaction history',
 ];
 
 export const AssistantPage: React.FC = () => {
@@ -43,13 +43,13 @@ export const AssistantPage: React.FC = () => {
       <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500 rounded-3xl p-6 text-white shadow-lg space-y-2">
         <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold">
           <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-          <span>Vyapar AI Munim (RAG)</span>
+          <span>Grounded RAG Intelligence</span>
         </div>
         <h2 className="text-xl md:text-2xl font-black">
-          🤖 AI Se Poocho (Ask Anything)
+          🤖 AI Business Memory Assistant
         </h2>
         <p className="text-purple-100 text-xs md:text-sm">
-          Aapke business ke sabhi bills, WhatsApp chats aur delivery challans ko padhkar 100% sahi hisab batata hai.
+          Answers grounded strictly in verified orders, invoices, and delivery challans with source citations.
         </p>
       </div>
 
@@ -57,7 +57,7 @@ export const AssistantPage: React.FC = () => {
       <div className="bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-indigo-100 shadow-md space-y-4">
         <div>
           <span className="text-xs font-bold text-slate-500 block mb-2">
-            💡 Sawal Chunhein Ya Likhein:
+            💡 Choose a Verified Question or Type Below:
           </span>
           <div className="flex flex-wrap gap-2">
             {SUGGESTIONS.map((s) => (
@@ -78,7 +78,7 @@ export const AssistantPage: React.FC = () => {
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Yahan apna sawal likhein (Hinglish, Hindi, English)..."
+            placeholder="Ask about orders, delivery shortfalls, deadlines, or invoices..."
             className="flex-1 px-4 py-3 rounded-2xl border border-indigo-200 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 bg-slate-50/50"
           />
           <button
@@ -87,7 +87,7 @@ export const AssistantPage: React.FC = () => {
             className="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs md:text-sm font-black hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 flex items-center gap-2 shadow-md shadow-purple-500/20 active:scale-95 transition"
           >
             <Send className="w-4 h-4" />
-            <span>{loading ? 'Khoj Raha Hai...' : 'Poocho'}</span>
+            <span>{loading ? 'Searching Records...' : 'Ask Assistant'}</span>
           </button>
         </form>
       </div>
@@ -107,7 +107,7 @@ export const AssistantPage: React.FC = () => {
           <div className="bg-white rounded-3xl border-2 border-purple-200 shadow-md p-6 space-y-5">
             <div className="flex items-center gap-2 text-xs font-black text-purple-700 uppercase tracking-wider">
               <Bot className="w-4 h-4" />
-              <span>AI Munim Ka Jawab:</span>
+              <span>AI Verified Answer:</span>
             </div>
 
             <div className="text-xs md:text-sm text-slate-800 whitespace-pre-line leading-relaxed font-sans font-medium bg-purple-50/40 p-4 rounded-2xl border border-purple-100">
@@ -118,7 +118,7 @@ export const AssistantPage: React.FC = () => {
             {result.citations.length > 0 && (
               <div className="pt-3 border-t border-slate-100 space-y-2">
                 <span className="text-xs font-black text-slate-500 uppercase tracking-wider block">
-                  📄 Asli Saboot (Verified Citations):
+                  📄 Source Document Citations:
                 </span>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                   {result.citations.map((c, i) => (

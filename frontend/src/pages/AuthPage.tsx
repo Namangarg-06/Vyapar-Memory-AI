@@ -114,7 +114,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
                 </span>
                 <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  भारत का #1 AI व्यापार रक्षक (Digital Munim)
+                  AI Business Operations OS & Guardian
                 </span>
               </div>
             </div>
@@ -123,17 +123,17 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
             <div className="mt-8 space-y-3">
               <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs px-3.5 py-1 rounded-full font-bold">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Zero Loss Guarantee • 100% Evidence Based</span>
+                <span>Zero Revenue Leakage • Evidence-Based</span>
               </div>
               <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-tight">
-                व्यापार का पक्का हिसाब, <br />
+                Accurate Business Accounting, <br />
                 <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400 bg-clip-text text-transparent">
-                  1 रुपये का भी नुकसान नहीं!
+                  Never Lose a Single Rupee!
                 </span>
               </h1>
               <p className="text-xs md:text-sm text-slate-300 leading-relaxed font-normal">
-                व्हाट्सएप आर्डर, जीएसटी टैक्स इनवॉइस और टेम्पो चालान का कंप्यूटर मिलान करता है।
-                अगर 50 डिब्बे का बिल कटा और टेम्पो से सिर्फ 45 डिब्बे पहुंचे, तो यह तुरंत पकड़ लेता है!
+                Automatically reconciles WhatsApp orders, GST tax invoices, and delivery challans.
+                If 50 boxes were billed but only 45 were delivered, the AI catches it instantly!
               </p>
             </div>
           </div>
@@ -143,10 +143,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
             <div className="flex items-center justify-between text-xs">
               <span className="font-extrabold text-indigo-300 flex items-center gap-1.5">
                 <Package className="w-4 h-4 text-indigo-400" />
-                Live Demo Case: Sharma Traders
+                Live Demo Scenario: Sharma Traders
               </span>
               <span className="text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold px-2 py-0.5 rounded-full">
-                🚨 5 Box Missing Alert
+                🚨 5-Box Shortfall Detected
               </span>
             </div>
 
@@ -157,19 +157,19 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
                 <span className="font-black text-white text-xs">50 Boxes</span>
               </div>
               <div className="bg-blue-950/40 border border-blue-500/30 p-2 rounded-xl">
-                <span className="text-[10px] text-blue-400 font-bold block">2. Bill</span>
+                <span className="text-[10px] text-blue-400 font-bold block">2. Invoice</span>
                 <span className="font-black text-white text-xs">50 Boxes</span>
               </div>
               <div className="bg-amber-950/40 border border-amber-500/30 p-2 rounded-xl">
-                <span className="text-[10px] text-amber-400 font-bold block">3. Challan</span>
-                <span className="font-black text-amber-300 text-xs">Sirf 45!</span>
+                <span className="text-[10px] text-amber-400 font-bold block">3. Delivery</span>
+                <span className="font-black text-amber-300 text-xs">45 Boxes</span>
               </div>
             </div>
 
             <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-white/5">
-              <span>Shortfall: <strong>₹12,500 Missing</strong></span>
+              <span>Shortfall: <strong className="text-rose-400">₹12,500 Missing Value</strong></span>
               <span className="text-emerald-400 font-bold flex items-center gap-1">
-                <MessageSquare className="w-3 h-3" /> WhatsApp Draft Ready
+                <MessageSquare className="w-3 h-3" /> WhatsApp Reminder Ready
               </span>
             </div>
           </div>
@@ -186,7 +186,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>AI Munim in Hindi</span>
+              <span>Grounded AI Assistant</span>
             </div>
           </div>
         </div>
@@ -195,13 +195,13 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
         <div className="lg:col-span-5 p-8 md:p-10 flex flex-col justify-center space-y-6 bg-slate-900/90">
           <div>
             <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider block mb-1">
-              ⚡ Instant Entry
+              ⚡ Instant Access
             </span>
             <h2 className="text-xl font-black text-white">
-              सीधा ऐप में प्रवेश करें
+              Launch Application
             </h2>
             <p className="text-xs text-slate-400 mt-1">
-              कोई पासवर्ड टाइप करने की ज़रूरत नहीं — नीचे 1-क्लिक बटन दबाएं:
+              No password typing required — click the direct access button:
             </p>
           </div>
 
@@ -218,10 +218,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
               </div>
               <div>
                 <span className="block text-xs md:text-sm font-black leading-tight">
-                  1-CLICK DIRECT DEMO
+                  1-CLICK DIRECT DEMO ENTRY
                 </span>
                 <span className="block text-[11px] text-emerald-100 font-medium">
-                  Sharma Traders Case Live Kholein
+                  Open Sharma Traders Case (50 vs 45)
                 </span>
               </div>
             </div>
@@ -231,7 +231,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
           {/* Divider */}
           <div className="flex items-center gap-3 text-[11px] text-slate-500 uppercase font-semibold">
             <div className="h-px bg-white/10 flex-1" />
-            <span>या क्रेडेंशियल्स से खोलें</span>
+            <span>or sign in with credentials</span>
             <div className="h-px bg-white/10 flex-1" />
           </div>
 
@@ -247,7 +247,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
               <>
                 <div>
                   <label className="block text-xs font-bold text-slate-300 mb-1">
-                    Aapka Naam (Your Name)
+                    Full Name
                   </label>
                   <div className="relative">
                     <UserIcon className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
@@ -262,7 +262,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-300 mb-1">
-                    Dukaan / Firm Ka Naam
+                    Business / Company Name
                   </label>
                   <input
                     type="text"
@@ -314,7 +314,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
               className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold text-xs shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 transition active:scale-95 disabled:opacity-50"
             >
               <Lock className="w-3.5 h-3.5" />
-              <span>{loading ? 'Please wait...' : mode === 'login' ? 'Sign In (साइन इन करें)' : 'Create Account (खाता बनाएं)'}</span>
+              <span>{loading ? 'Please wait...' : mode === 'login' ? 'Sign In to Workspace' : 'Create New Account'}</span>
             </button>
           </form>
 
@@ -326,8 +326,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
               className="text-xs text-indigo-400 hover:text-indigo-300 font-bold transition underline"
             >
               {mode === 'login'
-                ? "Naya account banana hai? Register karein"
-                : 'Pehle se account hai? Sign In karein'}
+                ? "Don't have an account? Register new workspace"
+                : 'Already registered? Sign In'}
             </button>
           </div>
         </div>
