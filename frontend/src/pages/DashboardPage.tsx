@@ -11,7 +11,6 @@ import {
   FileText,
   MessageSquare,
   Package,
-  RefreshCw,
   Sparkles,
   Truck,
   X,
@@ -39,19 +38,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   if (loading || !summary) {
     return (
-      <div className="space-y-6 animate-pulse">
-        <div className="h-20 bg-white rounded-2xl border border-slate-200" />
+      <div className="space-y-6 animate-pulse p-4">
+        <div className="h-20 bg-white/60 rounded-3xl" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="h-28 bg-white rounded-2xl border border-slate-200" />
+            <div key={n} className="h-32 bg-white/60 rounded-3xl" />
           ))}
         </div>
-        <div className="h-64 bg-white rounded-2xl border border-slate-200" />
+        <div className="h-72 bg-white/60 rounded-3xl" />
       </div>
     );
   }
 
-  const { open_discrepancies, kpis } = summary;
+  const { open_discrepancies } = summary;
   const isResolved = open_discrepancies.length === 0;
   const mainDisc = open_discrepancies[0];
 
@@ -87,184 +86,184 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
-      {/* 1. Header Bar: Clean & Minimalist */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
+    <div className="space-y-8 max-w-4xl mx-auto py-2">
+      {/* 1. Spacious Greeting Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">
-            Executive Operations Overview
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600/10 to-pink-600/10 text-indigo-700 text-xs px-3.5 py-1 rounded-full font-bold mb-1 border border-indigo-200/50">
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            <span>AI Business Operations Guardian</span>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
+            Good Morning, Naman! 👋
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Real-time cross-verification across WhatsApp orders, tax invoices, and delivery challans.
+          <p className="text-xs md:text-sm text-slate-500 mt-1">
+            {isResolved
+              ? 'All orders and delivery accounts are completely reconciled.'
+              : 'You have 1 delivery shortfall that needs a quick WhatsApp reminder.'}
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            Reconciliation Engine Active
-          </span>
-        </div>
+        <span className="self-start sm:self-center inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-700 border border-emerald-300">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>Live Tracking Active</span>
+        </span>
       </div>
 
       {statusMessage && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-2xl text-xs font-semibold flex items-center justify-between animate-in fade-in">
+        <div className="p-4 bg-emerald-50 border-2 border-emerald-300 text-emerald-900 rounded-3xl text-xs font-bold flex items-center justify-between shadow-sm animate-in fade-in">
           <div className="flex items-center gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
             <span>{statusMessage}</span>
           </div>
-          <button onClick={() => setStatusMessage('')} className="text-emerald-700 hover:text-emerald-900 text-xs font-bold">
-            Dismiss
+          <button onClick={() => setStatusMessage('')} className="text-emerald-700 hover:text-emerald-900 text-xs font-black">
+            ✕
           </button>
         </div>
       )}
 
-      {/* 2. Three Clean, Professional Metric Cards */}
+      {/* 2. Three Floating Candy Stat Cards (Vibrant, Colorful & Attractive) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
-          <div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-              Active Discrepancy
+        {/* Card 1: Purple / Violet */}
+        <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 p-6 rounded-3xl text-white shadow-xl shadow-indigo-500/15 space-y-3 transition transform hover:-translate-y-1">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-indigo-200 uppercase tracking-wider">
+              Discrepancies
             </span>
-            <div className="mt-1 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-slate-900">
-                {isResolved ? '0' : '1 Case'}
-              </span>
-              <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${isResolved ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>
-                {isResolved ? 'All Reconciled' : 'Attention Needed'}
-              </span>
+            <div className="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center">
+              <AlertTriangle className="w-4 h-4 text-white" />
             </div>
-            <p className="text-[11px] text-slate-500 mt-1">Sharma Traders (ORD-2026-101)</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
-            <AlertTriangle className="w-5 h-5" />
+          <div>
+            <div className="text-3xl font-black tracking-tight">
+              {isResolved ? '0' : '1 Case'}
+            </div>
+            <p className="text-xs text-indigo-200 mt-1 font-medium">
+              {isResolved ? 'All accounts verified' : 'Requires attention today'}
+            </p>
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
-          <div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-              Financial Shortfall
+        {/* Card 2: Vibrant Rose / Red */}
+        <div className="bg-gradient-to-br from-rose-500 via-rose-600 to-pink-600 p-6 rounded-3xl text-white shadow-xl shadow-rose-500/15 space-y-3 transition transform hover:-translate-y-1">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-rose-200 uppercase tracking-wider">
+              Missing Stock
             </span>
-            <div className="mt-1 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-rose-600">
-                {isResolved ? '₹0' : '₹12,500'}
-              </span>
-              <span className="text-[11px] font-bold text-slate-400">At Risk</span>
+            <div className="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center">
+              <Package className="w-4 h-4 text-white" />
             </div>
-            <p className="text-[11px] text-slate-500 mt-1">5 boxes unfulfilled @ ₹2,500/box</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
-            <Package className="w-5 h-5" />
+          <div>
+            <div className="text-3xl font-black tracking-tight">
+              {isResolved ? '0' : '5 Boxes'}
+            </div>
+            <p className="text-xs text-rose-100 mt-1 font-medium">
+              {isResolved ? 'No missing units' : 'Pending second tempo delivery'}
+            </p>
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
-          <div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-              Physical Fulfillment
+        {/* Card 3: Emerald / Teal */}
+        <div className="bg-gradient-to-br from-emerald-500 via-teal-600 to-emerald-700 p-6 rounded-3xl text-white shadow-xl shadow-emerald-500/15 space-y-3 transition transform hover:-translate-y-1">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-emerald-200 uppercase tracking-wider">
+              Pending Value
             </span>
-            <div className="mt-1 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-slate-900">45 / 50</span>
-              <span className="text-[11px] font-bold text-slate-400">Boxes (90%)</span>
+            <div className="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center">
+              <Truck className="w-4 h-4 text-white" />
             </div>
-            <p className="text-[11px] text-slate-500 mt-1">Delivery Challan: DC-2026-069</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
-            <Truck className="w-5 h-5" />
+          <div>
+            <div className="text-3xl font-black tracking-tight">
+              {isResolved ? '₹0' : '₹12,500'}
+            </div>
+            <p className="text-xs text-emerald-100 mt-1 font-medium">
+              {isResolved ? 'Full payment balanced' : 'Shortfall amount at risk'}
+            </p>
           </div>
         </div>
       </div>
 
-      {/* 3. The Focal Action Card: Clear, Uncluttered, Launch-Ready */}
+      {/* 3. The Focal Action Card (Sharma Traders Case) */}
       {isResolved ? (
-        <div className="bg-white p-10 rounded-3xl border border-slate-200 text-center space-y-3 shadow-xs">
-          <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto">
-            <CheckCircle2 className="w-6 h-6" />
+        <div className="bg-white/90 backdrop-blur-md p-10 rounded-3xl border border-slate-200 text-center space-y-3 shadow-md shadow-slate-200/50">
+          <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto shadow-inner">
+            <CheckCircle2 className="w-7 h-7" />
           </div>
-          <h2 className="text-base font-black text-slate-900">All Delivery Accounts Reconciled</h2>
-          <p className="text-xs text-slate-500 max-w-md mx-auto">
-            There are no outstanding quantity mismatches or missing delivery confirmations. All customer records are in sync.
+          <h2 className="text-lg font-black text-slate-900">All Accounts 100% Reconciled</h2>
+          <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            Great job! No quantity mismatches or missing delivery challans exist in your business right now.
           </p>
         </div>
       ) : (
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 md:p-8 space-y-6">
-          {/* Card Top: Customer & Issue Summary */}
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-5 border-b border-slate-100">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-black text-slate-900">
-                  Sharma Traders
-                </h2>
-                <span className="text-xs font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-bold">
-                  ORD-2026-101
-                </span>
-                <span className="text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 px-2.5 py-0.5 rounded-full">
-                  5-Box Shortfall
-                </span>
+        <div className="bg-white rounded-3xl border border-indigo-100/80 p-6 md:p-8 space-y-6 shadow-xl shadow-indigo-500/5">
+          {/* Card Top Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-600 via-indigo-600 to-pink-500 flex items-center justify-center text-white font-black text-lg shadow-md shadow-indigo-500/20">
+                ST
               </div>
-              <p className="text-xs text-slate-500 font-medium">
-                Location: Jaipur Warehouse • Item: Premium Biscuits (₹2,500 / box)
-              </p>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-lg font-black text-slate-900">Sharma Traders</h2>
+                  <span className="text-xs font-mono font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-lg">
+                    ORD-2026-101
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 font-medium mt-0.5">
+                  Jaipur Godown • Premium Biscuits (₹2,500/box)
+                </p>
+              </div>
             </div>
 
-            <div className="text-left sm:text-right shrink-0">
-              <span className="text-xs font-bold text-slate-400 block">Pending Impact</span>
-              <span className="text-xl font-black text-rose-600">₹12,500</span>
+            <span className="self-start sm:self-center text-xs font-black bg-rose-50 text-rose-700 border-2 border-rose-200 px-3 py-1 rounded-full animate-pulse">
+              🚨 5-Box Delivery Shortfall
+            </span>
+          </div>
+
+          {/* 3 Colorful Visual Pill Cards (Large & Easy to Read) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {/* Pill 1 */}
+            <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-1">
+              <span className="text-xs font-bold text-blue-700 block">1. Tax Invoice Billed</span>
+              <div className="text-2xl font-black text-blue-950">50 Boxes</div>
+              <p className="text-xs text-blue-800">INV-2026-042 (₹1,25,000)</p>
+            </div>
+
+            {/* Pill 2 */}
+            <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-1">
+              <span className="text-xs font-bold text-amber-800 block">2. Tempo Delivered</span>
+              <div className="text-2xl font-black text-amber-950">45 Boxes</div>
+              <p className="text-xs text-amber-900">Challan DC-2026-069</p>
+            </div>
+
+            {/* Pill 3 */}
+            <div className="p-4 rounded-2xl bg-rose-50 border-2 border-rose-300 space-y-1 shadow-xs">
+              <span className="text-xs font-bold text-rose-700 block">3. Missing Shortfall</span>
+              <div className="text-2xl font-black text-rose-600">-5 Boxes</div>
+              <p className="text-xs font-bold text-rose-800">₹12,500 Unfulfilled Value</p>
             </div>
           </div>
 
-          {/* 3-Part Simple Breakdown: Billed vs Received vs Shortfall */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                1. Invoiced in Tax Bill
-              </span>
-              <div className="text-lg font-black text-slate-900">50 Boxes</div>
-              <p className="text-xs text-slate-500">
-                Invoice <strong>INV-2026-042</strong> billed full ₹1,25,000 to customer.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                2. Received at Warehouse
-              </span>
-              <div className="text-lg font-black text-slate-900">45 Boxes</div>
-              <p className="text-xs text-slate-500">
-                Challan <strong>DC-2026-069</strong> confirms only 45 arrived by truck.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-rose-50/60 border border-rose-200 space-y-1">
-              <span className="text-[11px] font-bold text-rose-700 uppercase tracking-wider block">
-                3. Unfulfilled Shortfall
-              </span>
-              <div className="text-lg font-black text-rose-600">5 Boxes Missing</div>
-              <p className="text-xs text-rose-700 font-medium">
-                ₹12,500 customer balance requires immediate reminder.
-              </p>
-            </div>
-          </div>
-
-          {/* Clean Action Bar: 2 Clear, Obvious Buttons */}
+          {/* Big Action Buttons */}
           <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            <div className="text-xs text-slate-500">
-              Verify original documents or send pre-drafted WhatsApp follow-up.
-            </div>
+            <span className="text-xs text-slate-500 font-medium">
+              Choose an action below to resolve this transaction:
+            </span>
 
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowProofModal(true)}
-                className="px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-2"
+                className="px-4 py-3 rounded-2xl border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-2"
               >
-                <FileCheck className="w-4 h-4 text-slate-500" />
-                <span>View Evidence (Proof)</span>
+                <FileCheck className="w-4 h-4 text-indigo-600" />
+                <span>View Evidence</span>
               </button>
 
               <button
                 onClick={() => setShowWhatsAppModal(true)}
-                className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm flex items-center justify-center gap-2 transition active:scale-95"
+                className="px-5 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-black shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5 active:scale-95"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Send WhatsApp Reminder</span>
@@ -274,41 +273,50 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         </div>
       )}
 
-      {/* 4. Quick AI Query Bar (Minimalist) */}
-      <div className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-            <span>AI Business Assistant</span>
-          </h3>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Have questions about quantities, GST rates, or delivery dates? Ask the grounded assistant.
-          </p>
+      {/* 4. Sleek AI Question Button */}
+      <div className="bg-gradient-to-r from-purple-500/10 via-indigo-500/10 to-pink-500/10 p-5 rounded-3xl border border-indigo-200/60 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+            🤖
+          </div>
+          <div>
+            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+              Need Answers on Orders or Deadlines?
+            </h3>
+            <p className="text-xs text-slate-500">
+              Ask your AI Munim in natural English or Hindi anytime.
+            </p>
+          </div>
         </div>
 
         <button
           onClick={() => onNavigate('assistant')}
-          className="px-4 py-2 rounded-xl border border-indigo-200 text-indigo-700 hover:bg-indigo-50 text-xs font-bold shrink-0 transition flex items-center justify-center gap-1.5"
+          className="px-4 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shrink-0 transition flex items-center gap-1.5 shadow-sm shadow-indigo-500/20"
         >
-          <span>Ask Assistant</span>
+          <span>Open AI Assistant</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>
 
-      {/* MODAL: Clean WhatsApp Sender */}
+      {/* POPUP MODAL: WhatsApp Reminder */}
       {showWhatsAppModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white rounded-3xl shadow-xl max-w-lg w-full p-6 space-y-4 border border-slate-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 space-y-4 border border-slate-200">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h3 className="font-black text-sm text-slate-900">
-                  Send WhatsApp Reminder • Sharma Traders
-                </h3>
-                <p className="text-[11px] text-slate-400">Order Ref: ORD-2026-101 (Jaipur)</p>
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-600">
+                  <MessageSquare className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-black text-sm text-slate-900">
+                    Send WhatsApp Reminder
+                  </h3>
+                  <p className="text-[11px] text-slate-400">Sharma Traders • ORD-2026-101</p>
+                </div>
               </div>
               <button
                 onClick={() => setShowWhatsAppModal(false)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100"
+                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -321,9 +329,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 <button
                   key={lang}
                   onClick={() => setLanguage(lang)}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold capitalize transition ${
+                  className={`px-3 py-1 rounded-xl text-xs font-bold capitalize transition ${
                     language === lang
-                      ? 'bg-emerald-600 text-white'
+                      ? 'bg-emerald-600 text-white shadow-xs'
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
@@ -333,7 +341,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             </div>
 
             {/* Message Box */}
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-800 font-sans whitespace-pre-wrap leading-relaxed">
+            <div className="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200 text-xs text-slate-800 font-sans whitespace-pre-wrap leading-relaxed">
               {currentMessage}
             </div>
 
@@ -341,7 +349,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <div className="flex flex-wrap items-center justify-between gap-2 pt-2">
               <button
                 onClick={handleCopy}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition active:scale-95"
               >
                 {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                 <span>{copied ? 'Copied to Clipboard!' : 'Copy Message'}</span>
@@ -350,14 +358,14 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleWhatsAppSend}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 transition"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 shadow-md shadow-emerald-500/20 transition active:scale-95"
                 >
                   <ExternalLink className="w-4 h-4" />
                   <span>Open WhatsApp</span>
                 </button>
                 <button
                   onClick={handleMarkResolved}
-                  className="px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-semibold"
+                  className="px-3 py-2.5 rounded-2xl border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-bold transition"
                 >
                   Mark Done
                 </button>
@@ -367,22 +375,27 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         </div>
       )}
 
-      {/* MODAL: Clean Evidence / Proof Viewer */}
+      {/* POPUP MODAL: Proof Documents */}
       {showProofModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white rounded-3xl shadow-xl max-w-2xl w-full p-6 space-y-4 border border-slate-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-6 space-y-4 border border-slate-200">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h3 className="font-black text-sm text-slate-900">
-                  Audit Evidence Trail • Sharma Traders
-                </h3>
-                <p className="text-[11px] text-slate-400">
-                  Cross-document verification across WhatsApp chat, Tax Invoice, and Delivery Challan
-                </p>
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-2xl bg-indigo-100 flex items-center justify-center text-indigo-600">
+                  <FileCheck className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-black text-sm text-slate-900">
+                    Source Evidence Verification
+                  </h3>
+                  <p className="text-[11px] text-slate-400">
+                    Why 5 boxes are missing — verified from 3 separate original documents
+                  </p>
+                </div>
               </div>
               <button
                 onClick={() => setShowProofModal(false)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100"
+                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -401,7 +414,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   "Please dispatch 50 boxes of premium biscuits to Jaipur warehouse, final rate ₹2,500/box. Dispatch by tomorrow."
                 </p>
                 <p className="text-[11px] text-emerald-700 font-semibold">
-                  ✓ Verified: Customer agreed to purchase 50 boxes.
+                  ✓ Verified: Customer confirmed an order of 50 boxes.
                 </p>
               </div>
 
@@ -439,7 +452,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setShowProofModal(false)}
-                className="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition"
+                className="px-5 py-2.5 rounded-2xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition"
               >
                 Close Evidence Viewer
               </button>
