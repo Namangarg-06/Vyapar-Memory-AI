@@ -4,11 +4,7 @@ import { AuthPage } from './pages/AuthPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { DiscrepanciesPage } from './pages/DiscrepanciesPage';
 import { OrdersCommitmentsPage } from './pages/OrdersCommitmentsPage';
-import { DocumentsPage } from './pages/DocumentsPage';
 import { AssistantPage } from './pages/AssistantPage';
-import { TasksDraftsPage } from './pages/TasksDraftsPage';
-import { PartiesPage } from './pages/PartiesPage';
-import { AuditSettingsPage } from './pages/AuditSettingsPage';
 import { api, getStoredToken, setStoredToken } from './services/api';
 import { DashboardSummary, User, Workspace } from './types';
 
@@ -106,20 +102,7 @@ export function App() {
       {activeTab === 'orders' && (
         <OrdersCommitmentsPage onDataMutated={loadSummary} />
       )}
-      {activeTab === 'documents' && (
-        <DocumentsPage onDataMutated={loadSummary} />
-      )}
       {activeTab === 'assistant' && <AssistantPage />}
-      {activeTab === 'tasks' && (
-        <TasksDraftsPage onDataMutated={loadSummary} />
-      )}
-      {activeTab === 'parties' && <PartiesPage onDataMutated={loadSummary} />}
-      {activeTab === 'audit' && (
-        <AuditSettingsPage mode="audit" workspace={workspace} />
-      )}
-      {activeTab === 'settings' && (
-        <AuditSettingsPage mode="settings" workspace={workspace} />
-      )}
     </Layout>
   );
 }

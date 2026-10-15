@@ -164,11 +164,11 @@ export const DiscrepanciesPage: React.FC<DiscrepanciesPageProps> = ({
               {/* Action */}
               <div className="pt-2 flex justify-end gap-2">
                 <button
-                  onClick={() => onNavigate('tasks')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700"
+                  onClick={() => onNavigate('dashboard')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 shadow-xs"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
-                  <span>Review & Approve WhatsApp Follow-Up</span>
+                  <span>WhatsApp Reminder Bhejein (Dashboard)</span>
                 </button>
               </div>
             </div>
